@@ -1,39 +1,35 @@
 # Rajendra Royal — Personal Branding Website
 
-## Quick Start (Local)
+## Tech Stack
+- **React 18** (Create React App)
+- **Vanilla CSS-in-JS** (no Tailwind / no styled-components)
+- **localStorage** for admin panel data persistence
+- **Vercel** for deployment
+
+## Quick Start (Local Development)
+
 ```bash
 npm install
 npm start
 # Opens at http://localhost:3000
 ```
 
-## Deploy to Vercel (Live Website)
+## Deploy to Vercel
 
-### Step 1 — Install Vercel CLI
+### Option A — Via GitHub (Recommended, auto-deploys on push)
+1. Push to GitHub (see below)
+2. Go to https://vercel.com → New Project → Import from GitHub
+3. Select `rajendra-royal` repo → Deploy
+4. Done — live at `rajendra-royal.vercel.app` in ~2 minutes
+
+### Option B — Via CLI
 ```bash
 npm install -g vercel
-```
-
-### Step 2 — Build the project
-```bash
 npm run build
+vercel --prod
 ```
 
-### Step 3 — Deploy
-```bash
-vercel
-```
-Follow the 3 prompts. Your site goes live at a `.vercel.app` URL instantly.
-
-### Step 4 — Add Custom Domain
-1. Buy `rajendraroyal.com` from GoDaddy or Namecheap (~₹800/year)
-2. In Vercel dashboard → your project → Settings → Domains
-3. Add `rajendraroyal.com` and `www.rajendraroyal.com`
-4. Copy the DNS records Vercel shows you
-5. In your domain registrar → DNS settings → paste Vercel's records
-6. Wait 10–30 minutes → live on your domain
-
-## GitHub Setup
+## Push to GitHub
 ```bash
 git init
 git add .
@@ -42,45 +38,73 @@ git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/rajendra-royal.git
 git push -u origin main
 ```
-Then in Vercel → Import from GitHub → auto-deploys on every push.
 
-## Contact Form Setup (Formspree — Free)
-1. Go to https://formspree.io and sign up (free)
-2. Create a new form → copy your form ID (e.g. `xpwzabcd`)
-3. In App.jsx, find the contact form section
-4. Replace: `<form>` with `<form action="https://formspree.io/f/xpwzabcd" method="POST">`
-5. That's it — form submissions arrive in your email
+## Connect Custom Domain
+1. Buy `rajendraroyal.com` (GoDaddy / Namecheap ~₹800/yr)
+2. Vercel dashboard → Project → Settings → Domains → Add domain
+3. Copy DNS records from Vercel → paste into domain registrar
+4. Wait 15–60 mins → live at https://www.rajendraroyal.com
 
-## Resume PDF
-1. Name your CV file: `Rajendra_Royal_CV.pdf`
-2. Place it in the `/public` folder
-3. In Admin Panel → Profile → CV URL → type: `/Rajendra_Royal_CV.pdf`
-4. The Download CV button now links to the real file
+## Add Your Profile Photo
+1. Save as `photo.jpg` → place in `/public/`
+2. Open site → click ✏️ (Admin Panel) → Profile tab → Photo URL → `/photo.jpg`
+3. Save → photo appears in About section
 
-## Google Search Console (Indexing)
+## Add Gallery Photos
+1. Create `/public/gallery/` folder
+2. Add photos: `event1.jpg`, `iim.jpg`, etc.
+3. Admin Panel (✏️) → Gallery tab → paste paths like `/gallery/event1.jpg`
+
+## Add Speaking Event Photos
+1. Place photo in `/public/gallery/`
+2. Admin Panel → Speaking tab → each event → Photo field → `/gallery/speaking1.jpg`
+
+## Connect Contact Form (Formspree — Free)
+1. Go to https://formspree.io → sign up → New Form
+2. Copy your form ID (e.g. `xpwzabcd`)
+3. In `src/App.js` find the contact form — wrap inputs in:
+   ```jsx
+   <form action="https://formspree.io/f/xpwzabcd" method="POST">
+     {/* existing inputs with name attributes */}
+     <button type="submit">Send Message</button>
+   </form>
+   ```
+
+## Upload Resume PDF
+1. Save as `Rajendra_Royal_CV.pdf` → place in `/public/`
+2. Admin Panel → Profile → Resume URL → `/Rajendra_Royal_CV.pdf`
+
+## Enable Google Indexing (after domain is live)
 1. Go to https://search.google.com/search-console
-2. Add property → Domain → type `rajendraroyal.com`
-3. Verify via DNS (Vercel dashboard makes this easy)
+2. Add property → Domain → `rajendraroyal.com`
+3. Verify via DNS
 4. Submit sitemap: `https://www.rajendraroyal.com/sitemap.xml`
-5. Request indexing for your homepage
+5. Request indexing on homepage
 
-## LinkedIn Integration
-- Your LinkedIn URL is already in the site data
-- Update it via Admin Panel (✏️ button) → Profile → LinkedIn URL
-- Enter your real URL: `linkedin.com/in/YOUR-ACTUAL-HANDLE`
+## Project Structure
+```
+rajendra-royal/
+├── public/
+│   ├── index.html        ← SEO meta, Open Graph, JSON-LD structured data
+│   ├── manifest.json     ← PWA manifest
+│   ├── robots.txt        ← Google crawl permission
+│   ├── sitemap.xml       ← Google sitemap
+│   ├── favicon.ico       ← Add your own
+│   └── gallery/          ← Put event photos here
+├── src/
+│   ├── App.js            ← Full website — all sections, admin panel
+│   └── index.js          ← React entry point
+├── vercel.json           ← Vercel config + security headers
+├── package.json          ← Dependencies (React 18, react-scripts)
+├── .gitignore
+└── README.md
+```
 
-## Files in This Project
-```
-/public
-  index.html     ← SEO meta tags, Open Graph, structured data
-  robots.txt     ← Tells Google to index your site
-  sitemap.xml    ← Helps Google find all pages
-  manifest.json  ← PWA config, mobile home screen icon
-/src
-  index.js       ← React entry point
-  App.jsx        ← Full website (copy from rajendra_royal_v2.jsx)
-vercel.json      ← Vercel deployment config
-.gitignore       ← Git ignore rules
-package.json     ← Project dependencies
-README.md        ← This file
-```
+## Admin Panel
+Click the **✏️ button** (bottom-right corner) to open the editor.
+Tabs: Profile · About · Expertise · Curriculum · Credentials · Portfolio · Speaking · Gallery · Journey · Quotes · Testimonials · Blog · Ticker
+
+All changes save to **localStorage** and persist across page refreshes.
+
+---
+*Built for Rajendra Royal — Supply Chain & Operations Leader | Doctoral Researcher*
