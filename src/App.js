@@ -1028,7 +1028,7 @@ export default function App() {
         <div className="hero-grid-bg" />
         <div className="hero-l">
           <div className="hero-badge"><span className="hero-badge-dot" />{data.profile.title}</div>
-          <h1><em>{data.profile.headline.split("Transforming")[0]}</em>{data.profile.headline.includes("Transforming") ? data.profile.headline : data.profile.headline}</h1>
+          <h1>{data.profile.headline}</h1>
           <p className="hero-sub">{data.profile.subheading}</p>
           <div className="open-to-badge">
             <span className="open-to-dot" />
