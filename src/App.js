@@ -11,7 +11,7 @@ const DATA = {
     openTo:"Open to Senior Leadership, CXO & Consulting Roles",
     email:"rajendra@rajendraroyal.com",
     linkedin:"www.linkedin.com/in/rajendraroyal/",
-    twitter:"@rajendraroyal",location:"India",cvUrl:"#",photo:"",
+    twitter:"@rajendraroyal",location:"India",cvUrl:"#",photo:"/Photo.jpg",
   },
   ticker:[
     "🔬 Doctoral Researcher · Business & Operations · SSBM Geneva",
