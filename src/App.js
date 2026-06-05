@@ -11,7 +11,7 @@ const DATA = {
     openTo:"Open to Senior Leadership, CXO & Consulting Roles",
     email:"rajendra@rajendraroyal.com",
     linkedin:"www.linkedin.com/in/rajendraroyal/",
-    twitter:"@rajendraroyal",location:"India",cvUrl:"#",photo:"/Photo.jpg",
+    twitter:"@rajendraroyal",location:"India",cvUrl:"#",photo:"/photo.jpg",
   },
   ticker:[
     "🔬 Doctoral Researcher · Business & Operations · SSBM Geneva",
@@ -633,6 +633,51 @@ function Admin({data,onSave,onClose}){
 const LiSvg=()=><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>;
 const EmSvg=()=><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>;
 
+function ContactForm({email}){
+  const [form,setForm]=useState({name:"",email:"",phone:"",org:"",msg:""});
+  const [status,setStatus]=useState("idle"); // idle | sending | sent | error
+  const set=(k,v)=>setForm(f=>({...f,[k]:v}));
+  const submit=async()=>{
+    if(!form.name||!form.email||!form.msg){alert("Please fill in Name, Email and Message.");return;}
+    setStatus("sending");
+    try{
+      const res=await fetch("https://formspree.io/f/xykazgaq",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({name:form.name,email:form.email,phone:form.phone,organisation:form.org,message:form.msg})
+      });
+      if(res.ok){setStatus("sent");setForm({name:"",email:"",phone:"",org:"",msg:""});}
+      else{setStatus("error");}
+    }catch{setStatus("error");}
+  };
+  if(status==="sent") return(
+    <div style={{padding:"2.5rem",border:"1px solid rgba(34,197,94,.3)",background:"rgba(34,197,94,.06)",textAlign:"center"}}>
+      <div style={{fontSize:"2rem",marginBottom:".8rem"}}>✓</div>
+      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"1.3rem",color:"#f5f7fa",marginBottom:".5rem"}}>Message Sent Successfully</div>
+      <div style={{fontSize:".82rem",color:"#7a8fa8",marginBottom:"1.4rem"}}>Thank you — Rajendra will be in touch shortly.</div>
+      <button className="btn-gold" onClick={()=>setStatus("idle")}>Send Another Message</button>
+    </div>
+  );
+  return(
+    <div>
+      <div className="f-row">
+        <div><label className="f-lbl">Name *</label><input type="text" className="f-in" placeholder="Your full name" value={form.name} onChange={e=>set("name",e.target.value)}/></div>
+        <div><label className="f-lbl">Email *</label><input type="email" className="f-in" placeholder="your@email.com" value={form.email} onChange={e=>set("email",e.target.value)}/></div>
+      </div>
+      <label className="f-lbl">Phone</label>
+      <input type="tel" className="f-in" placeholder="+91 00000 00000" value={form.phone} onChange={e=>set("phone",e.target.value)}/>
+      <label className="f-lbl">Organisation / Role</label>
+      <input type="text" className="f-in" placeholder="Company and your position" value={form.org} onChange={e=>set("org",e.target.value)}/>
+      <label className="f-lbl">How can I help? *</label>
+      <textarea className="f-area" placeholder="Tell me about your project or inquiry..." value={form.msg} onChange={e=>set("msg",e.target.value)}/>
+      {status==="error"&&<div style={{fontSize:".78rem",color:"rgba(239,68,68,.8)",margin:".5rem 0"}}>Something went wrong. Please email directly: {email}</div>}
+      <button className="btn-gold" style={{marginTop:"1rem",opacity:status==="sending"?.6:1,cursor:status==="sending"?"not-allowed":"pointer"}} onClick={submit} disabled={status==="sending"}>
+        {status==="sending"?"Sending...":"Send Message"}
+      </button>
+    </div>
+  );
+}
+
 export default function App(){
   const [data,setData]=useState(()=>{try{const s=localStorage.getItem("rr_v6");return s?{...DATA,...JSON.parse(s)}:DATA;}catch{return DATA;}});
   const [adminOpen,setAdminOpen]=useState(false);
@@ -1065,17 +1110,7 @@ export default function App(){
               <a href={`https://${data.profile.linkedin}`} target="_blank" rel="noreferrer" className="soc-link"><div className="soc-icon"><LiSvg/></div><div><div className="soc-name">LinkedIn</div><div className="soc-handle">{data.profile.linkedin}</div></div></a>
               <a href={`mailto:${data.profile.email}`} className="soc-link"><div className="soc-icon"><EmSvg/></div><div><div className="soc-name">Email</div><div className="soc-handle">{data.profile.email}</div></div></a>
             </div>
-            <div>
-              <div className="f-row">
-                <div><label className="f-lbl">Name</label><input type="text" className="f-in" placeholder="Your full name"/></div>
-                <div><label className="f-lbl">Email</label><input type="email" className="f-in" placeholder="your@email.com"/></div>
-              </div>
-              <label className="f-lbl">Phone</label><input type="tel" className="f-in" placeholder="+91 00000 00000"/>
-              <label className="f-lbl">Organisation / Role</label><input type="text" className="f-in" placeholder="Company and your position"/>
-              <label className="f-lbl">How can I help?</label>
-              <textarea className="f-area" placeholder="Tell me about your project or inquiry..."/>
-              <button className="btn-gold" style={{marginTop:"1rem"}}>Send Message</button>
-            </div>
+            <ContactForm email={data.profile.email}/>
           </div>
         </Rev>
       </section>
