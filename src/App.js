@@ -115,6 +115,20 @@ const DATA = {
     {text:"Leadership is not about being in charge. It is about taking care of those in your charge.",author:"Simon Sinek"},
     {text:"Lean thinking is not a tool. It is a mindset — and mindsets outlast any methodology.",author:"Rajendra Royal"},
   ],
+  gallery:[
+    {img:"",caption:"Supply Chain Conference 2024",category:"Speaking"},
+    {img:"",caption:"Warehouse Operations Workshop",category:"Workshop"},
+    {img:"",caption:"IIM Calcutta EPOM Programme",category:"Education"},
+    {img:"",caption:"Operations Leadership Summit",category:"Speaking"},
+    {img:"",caption:"Team Leadership Session",category:"Corporate"},
+    {img:"",caption:"Industry Panel Discussion",category:"Speaking"},
+  ],
+  events:[
+    {type:"Upcoming",date:"2026",title:"Supply Chain Transformation in the Age of AI & Analytics",venue:"Industry Conference · India",desc:"Keynote address on leveraging analytics and AI for next-generation supply chain operations."},
+    {type:"Speaking",date:"2025",title:"Lean Warehousing & the Future of Distribution Centre Excellence",venue:"Logistics Leaders Forum · India",desc:"Panel discussion on operational excellence and high-performance warehouse design."},
+    {type:"Workshop",date:"2025",title:"Building High-Performance Supply Chain Teams",venue:"Corporate Leadership Workshop",desc:"Interactive workshop on leadership, culture, and team performance in operations."},
+    {type:"Research",date:"2026",title:"Doctoral Research Presentation",venue:"SSBM Geneva · Business & Operations",desc:"Presenting research on contemporary challenges in operations, leadership, and organizational effectiveness."},
+  ],
 };
 
 const css = `
@@ -191,7 +205,7 @@ body{font-family:'DM Sans',sans-serif;background:#081220;color:#f5f7fa;overflow-
 .btn-ghost:hover{border-color:#c9a84c;color:#c9a84c;transform:translateY(-2px)}
 .hero-right{position:relative;z-index:3;height:100%;display:flex;flex-direction:column}
 .hero-photo{flex:1;position:relative;overflow:hidden}
-.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block}
 .hero-photo::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(8,18,32,.92) 0%,rgba(8,18,32,.5) 25%,rgba(8,18,32,.1) 55%,transparent 100%)}
 .hero-photo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:220px;z-index:1;background:linear-gradient(transparent,rgba(8,18,32,.95))}
 .hero-placeholder{width:100%;height:100%;background:linear-gradient(160deg,#1a2e4a,#0c1c36,#081220);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
@@ -239,7 +253,7 @@ body{font-family:'DM Sans',sans-serif;background:#081220;color:#f5f7fa;overflow-
 
 .about-grid{display:grid;grid-template-columns:320px 1fr;gap:5rem;align-items:start;margin-top:3.5rem}
 .portrait{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,#163058,#081220);border:1px solid rgba(201,168,76,.18);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.portrait img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
 .portrait-init{font-family:'Cormorant Garamond',serif;font-size:6rem;font-weight:300;color:rgba(201,168,76,.07);letter-spacing:-.04em;user-select:none}
 .p-ov{position:absolute;bottom:0;left:0;right:0;padding:1.4rem;background:linear-gradient(transparent,rgba(8,18,32,.97))}
 .p-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500}
@@ -426,6 +440,47 @@ footer{background:#081220;border-top:1px solid rgba(201,168,76,.18)}
 .foot-copy{font-family:'DM Mono',monospace;font-size:.6rem;color:#7a8fa8;letter-spacing:.08em}
 .foot-dba{font-family:'DM Mono',monospace;font-size:.58rem;color:#c9a84c;letter-spacing:.1em}
 
+.gallery-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.gf-btn{padding:.28rem .85rem;border:1px solid rgba(201,168,76,.22);background:transparent;color:rgba(245,247,250,.45);font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .25s}
+.gf-btn:hover,.gf-btn.on{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.06)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.gallery-card{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid rgba(201,168,76,.18);cursor:pointer;background:#0c1c36}
+.gallery-card img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.gallery-card:hover img{transform:scale(1.05)}
+.gallery-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(160deg,#0c1c36,#081220)}
+.gallery-placeholder-icon{font-size:2.5rem;opacity:.25}
+.gallery-placeholder-txt{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,247,250,.2)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(8,18,32,.95));opacity:0;transition:opacity .3s}
+.gallery-card:hover .gallery-overlay{opacity:1}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:1rem;transform:translateY(8px);transition:transform .3s}
+.gallery-cap-cat{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:#c9a84c;margin-bottom:.25rem}
+.gallery-cap-txt{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:400;color:#f5f7fa;line-height:1.3}
+.gallery-card:hover .gallery-caption{transform:translateY(0)}
+.gallery-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:flex;align-items:center;justify-content:center;padding:2rem;cursor:pointer}
+.gallery-lb-img{max-width:90vw;max-height:85vh;object-fit:contain;border:1px solid rgba(201,168,76,.2)}
+.gallery-lb-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:rgba(245,247,250,.5);font-size:1.8rem;cursor:pointer;transition:color .2s}
+.gallery-lb-close:hover{color:#f5f7fa}
+.gallery-lb-cap{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:rgba(245,247,250,.65);white-space:nowrap}
+.events-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:3.5rem}
+.event-card{padding:2.2rem;border:1px solid rgba(201,168,76,.18);background:#0c1c36;position:relative;overflow:hidden;transition:all .28s}
+.event-card:hover{border-color:rgba(201,168,76,.4);background:#101e35}
+.event-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#c9a84c,transparent);transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.event-card:hover::before{transform:scaleX(1)}
+.event-type-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.event-type{padding:.2rem .7rem;font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);color:#c9a84c;background:rgba(201,168,76,.06)}
+.event-type.upcoming{border-color:rgba(34,197,94,.3);color:rgba(34,197,94,.85);background:rgba(34,197,94,.06)}
+.event-date{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(245,247,250,.3)}
+.event-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;line-height:1.3;margin-bottom:.6rem;color:#f5f7fa}
+.event-venue{display:flex;align-items:center;gap:.5rem;font-size:.76rem;color:#c9a84c;margin-bottom:.7rem}
+.event-venue::before{content:'';width:8px;height:1px;background:#c9a84c;flex-shrink:0}
+.event-desc{font-size:.78rem;color:#7a8fa8;line-height:1.7}
+@media(max-width:768px){
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .events-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:1fr}
+}
 .admin-fab{position:fixed;bottom:2rem;right:2rem;z-index:998;width:44px;height:44px;background:#0c1c36;border:1px solid rgba(201,168,76,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#c9a84c;font-size:1rem;transition:all .25s;box-shadow:0 4px 18px rgba(0,0,0,.4)}
 .admin-fab:hover{background:#c9a84c;color:#081220;border-color:#c9a84c}
 .pw-screen{position:fixed;inset:0;background:rgba(8,18,32,.97);z-index:1100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem}
@@ -588,7 +643,7 @@ function Quotes({quotes}){
 }
 
 /* ── ADMIN ── */
-const TABS=["Profile","About","Skills","Credentials","Portfolio","Expertise","Journey","Testimonials","Education","Quotes"];
+const TABS=["Profile","About","Skills","Credentials","Portfolio","Expertise","Journey","Testimonials","Education","Gallery","Events","Quotes"];
 function PwScreen({onAuth,onClose}){
   const [pw,setPw]=useState("");const [err,setErr]=useState(false);
   const check=()=>{if(pw===ADMIN_PASSWORD){onAuth();}else{setErr(true);setPw("");setTimeout(()=>setErr(false),2000);}};
@@ -624,6 +679,8 @@ function Admin({data,onSave,onClose}){
     case "Journey":return(<><div className="a-sec">Career Timeline</div>{d.journey.map((j,i)=>(<div key={i} className="a-item"><div className="a-item-fields"><input className="a-in" value={j.period} onChange={e=>sli("journey",i,"period",e.target.value)}/><input className="a-in" value={j.role} onChange={e=>sli("journey",i,"role",e.target.value)}/><input className="a-in" value={j.org} onChange={e=>sli("journey",i,"org",e.target.value)}/><textarea className="a-area" value={j.desc} onChange={e=>sli("journey",i,"desc",e.target.value)}/></div><button className="a-del" onClick={()=>del("journey",i)}>✕</button></div>))}<button className="a-add" onClick={()=>add("journey",{period:"Year–Year",role:"Role",org:"Org",desc:"Description"})}>+ Add Position</button></>);
     case "Testimonials":return(<><div className="a-sec">Testimonials</div>{d.testimonials.map((t,i)=>(<div key={i} className="a-item"><div className="a-item-fields"><textarea className="a-area" value={t.text} onChange={e=>sli("testimonials",i,"text",e.target.value)} style={{minHeight:68}}/><input className="a-in" value={t.name} onChange={e=>sli("testimonials",i,"name",e.target.value)}/><input className="a-in" value={t.role} onChange={e=>sli("testimonials",i,"role",e.target.value)}/></div><button className="a-del" onClick={()=>del("testimonials",i)}>✕</button></div>))}<button className="a-add" onClick={()=>add("testimonials",{text:"Testimonial.",name:"Name",role:"Role"})}>+ Add</button></>);
     case "Education":return(<><div className="a-sec">Education Cards</div>{d.education.map((e,i)=>(<div key={i} className="a-item"><div className="a-item-fields"><input className="a-in" value={e.inst} onChange={ev=>sli("education",i,"inst",ev.target.value)}/><input className="a-in" value={e.degree} onChange={ev=>sli("education",i,"degree",ev.target.value)}/><textarea className="a-area" value={e.detail} onChange={ev=>sli("education",i,"detail",ev.target.value)} style={{minHeight:44}}/><label style={{fontSize:".7rem",color:"#7a8fa8",display:"flex",alignItems:"center",gap:".4rem"}}><input type="checkbox" checked={e.active} onChange={ev=>sli("education",i,"active",ev.target.checked)}/> Show "Active" badge</label></div><button className="a-del" onClick={()=>del("education",i)}>✕</button></div>))}<button className="a-add" onClick={()=>add("education",{inst:"Institution",degree:"Degree",detail:"Details",active:false})}>+ Add Education</button></>);
+    case "Gallery":return(<><div className="a-sec">Photo Gallery</div><p style={{fontSize:".75rem",color:"#7a8fa8",marginBottom:"1rem",lineHeight:1.6}}>Upload photos to GitHub public/ folder first, then enter the filename here (e.g. /gallery1.jpg)</p>{d.gallery.map((g,i)=>(<div key={i} className="a-item"><div className="a-item-fields"><input className="a-in" placeholder="Image URL (e.g. /gallery1.jpg)" value={g.img} onChange={e=>sli("gallery",i,"img",e.target.value)}/><input className="a-in" placeholder="Caption" value={g.caption} onChange={e=>sli("gallery",i,"caption",e.target.value)}/><input className="a-in" placeholder="Category (Speaking/Workshop/Corporate/Education)" value={g.category} onChange={e=>sli("gallery",i,"category",e.target.value)}/></div><button className="a-del" onClick={()=>del("gallery",i)}>✕</button></div>))}<button className="a-add" onClick={()=>add("gallery",{img:"",caption:"New Photo",category:"Speaking"})}>+ Add Photo</button></>);
+    case "Events":return(<><div className="a-sec">Speaking & Events</div>{d.events.map((ev,i)=>(<div key={i} className="a-item"><div className="a-item-fields"><input className="a-in" placeholder="Type (Upcoming/Speaking/Workshop/Research)" value={ev.type} onChange={e=>sli("events",i,"type",e.target.value)}/><input className="a-in" placeholder="Date (e.g. 2026)" value={ev.date} onChange={e=>sli("events",i,"date",e.target.value)}/><input className="a-in" placeholder="Title" value={ev.title} onChange={e=>sli("events",i,"title",e.target.value)}/><input className="a-in" placeholder="Venue" value={ev.venue} onChange={e=>sli("events",i,"venue",e.target.value)}/><textarea className="a-area" placeholder="Description" value={ev.desc} onChange={e=>sli("events",i,"desc",e.target.value)} style={{minHeight:48}}/></div><button className="a-del" onClick={()=>del("events",i)}>✕</button></div>))}<button className="a-add" onClick={()=>add("events",{type:"Upcoming",date:"2026",title:"Event Title",venue:"Venue · Location",desc:"Description"})}>+ Add Event</button></>);
     case "Quotes":return(<><div className="a-sec">Quotes</div>{d.quotes.map((q,i)=>(<div key={i} className="a-item"><div className="a-item-fields"><textarea className="a-area" value={q.text} onChange={e=>sli("quotes",i,"text",e.target.value)} style={{minHeight:64}}/><input className="a-in" value={q.author} onChange={e=>sli("quotes",i,"author",e.target.value)}/></div><button className="a-del" onClick={()=>del("quotes",i)}>✕</button></div>))}<button className="a-add" onClick={()=>add("quotes",{text:"Quote.",author:"Rajendra Royal"})}>+ Add Quote</button></>);
     default:return null;
   }};
@@ -632,6 +689,81 @@ function Admin({data,onSave,onClose}){
 
 const LiSvg=()=><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>;
 const EmSvg=()=><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>;
+
+function GallerySection({gallery}){
+  const [filter,setFilter]=useState("All");
+  const [lb,setLb]=useState(null);
+  const cats=["All",...[...new Set(gallery.map(g=>g.category))]];
+  const filtered=filter==="All"?gallery:gallery.filter(g=>g.category===filter);
+  return(
+    <section className="sec-dark" id="gallery">
+      <Rev>
+        <div className="sl">Gallery</div>
+        <h2 className="st">Moments & <em>Memories</em></h2>
+        <p className="sd">Speaking engagements, corporate events, workshops, and academic milestones.</p>
+        <div className="gallery-filters" style={{marginTop:"2rem"}}>
+          {cats.map(c=><button key={c} className={`gf-btn${filter===c?" on":""}`} onClick={()=>setFilter(c)}>{c}</button>)}
+        </div>
+        <div className="gallery-grid">
+          {filtered.map((g,i)=>(
+            <div key={i} className="gallery-card" onClick={()=>g.img&&setLb(g)}>
+              {g.img
+                ?<img src={g.img} alt={g.caption}/>
+                :<div className="gallery-placeholder">
+                  <div className="gallery-placeholder-icon">📷</div>
+                  <div className="gallery-placeholder-txt">{g.caption}</div>
+                </div>
+              }
+              <div className="gallery-overlay"/>
+              <div className="gallery-caption">
+                <div className="gallery-cap-cat">{g.category}</div>
+                <div className="gallery-cap-txt">{g.caption}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{fontSize:".75rem",color:"rgba(245,247,250,.25)",fontFamily:"'DM Mono',monospace",letterSpacing:".1em",textTransform:"uppercase",marginTop:"1.5rem",textAlign:"center"}}>
+          Add photos via Admin Panel ✏️ → Gallery tab
+        </p>
+      </Rev>
+      {lb&&(
+        <div className="gallery-lightbox" onClick={()=>setLb(null)}>
+          <button className="gallery-lb-close" onClick={()=>setLb(null)}>✕</button>
+          <img src={lb.img} alt={lb.caption} className="gallery-lb-img"/>
+          <div className="gallery-lb-cap">{lb.caption}</div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function EventsSection({events}){
+  return(
+    <section className="sec-alt" id="events">
+      <Rev>
+        <div className="sl">Speaking & Events</div>
+        <h2 className="st">On Stage & <em>In the Room</em></h2>
+        <p className="sd">Keynotes, panel discussions, workshops, and research presentations on supply chain strategy, operations excellence, and leadership.</p>
+        <div className="events-grid">
+          {events.map((ev,i)=>(
+            <div key={i} className="event-card">
+              <div className="event-type-row">
+                <span className={`event-type${ev.type==="Upcoming"?" upcoming":""}`}>{ev.type}</span>
+                <span className="event-date">{ev.date}</span>
+              </div>
+              <div className="event-title">{ev.title}</div>
+              <div className="event-venue">{ev.venue}</div>
+              <div className="event-desc">{ev.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{marginTop:"2rem",textAlign:"center"}}>
+          <button className="btn-ghost" onClick={()=>document.getElementById("contact").scrollIntoView({behavior:"smooth"})}>Invite Me to Speak</button>
+        </div>
+      </Rev>
+    </section>
+  );
+}
 
 function ContactForm({email}){
   const [form,setForm]=useState({name:"",email:"",phone:"",org:"",msg:""});
@@ -705,7 +837,7 @@ export default function App(){
   const go=id=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
   const openAdmin=()=>{if(authed){setAdminOpen(true);}else{setPwOpen(true);}};
   const onAuth=()=>{setAuthed(true);setPwOpen(false);setAdminOpen(true);};
-  const navLinks=[["about","About"],["skills","Skills"],["portfolio","Portfolio"],["expertise","Expertise"],["journey","Journey"],["education","Education"],["contact","Contact"]];
+  const navLinks=[["about","About"],["skills","Skills"],["portfolio","Portfolio"],["expertise","Expertise"],["journey","Journey"],["gallery","Gallery"],["events","Events"],["contact","Contact"]];
 
   /* particles */
   const particles=Array.from({length:20},(_,i)=>({
@@ -1094,6 +1226,12 @@ export default function App(){
           </div>
         </Rev>
       </section>
+
+      {/* GALLERY */}
+      <GallerySection gallery={data.gallery}/>
+
+      {/* EVENTS */}
+      <EventsSection events={data.events}/>
 
       {/* QUOTES */}
       <Quotes quotes={data.quotes}/>
